@@ -22,7 +22,11 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+* `UI.start` block provides start and finish headers with start and end times. This also provides better error display output which also includes the time
+* `UI.heading` display a green heading with a line return before
+* `UI.message` display a white message
+* `UI.error` dispay a red error message
+* `UI.execute` displays the command to execute, executes it and shows the output and also returns the result for potential further manipulations
 
 ## Development
 
