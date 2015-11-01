@@ -31,8 +31,7 @@ module UI
   end
 
   def self.time
-    time = Time.respond_to?(:current) ? Time.current : Time.now.utc
-    "🕑  #{time} 🕑 ".color(:white)
+    "🕑  #{Time.now.utc} 🕑 ".color(:white)
   end
 
   private
