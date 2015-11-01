@@ -8,7 +8,7 @@ module UI
     yield block
     finished
   rescue Exception => error
-    puts "\nFailed  #{'↓' * 61} #{time}".color(:red)
+    puts heading_with_columns("\nFailed", '↓', time).color(:red)
     raise error
   end
 
@@ -25,7 +25,7 @@ module UI
   end
 
   def self.execute(command)
-    puts '==> '.color(:blue) + command.color('#7F461D') # Brown
+    puts "#{'==>'.color(:blue)} #{command.bright}"
     puts result = `#{command}`
     result
   end
@@ -37,14 +37,28 @@ module UI
   private
 
   def self.start_heading(message)
-    fail if message.length > 70
-    puts '='.color(:cyan) * 100
-    print message.color(:cyan)
-    puts ' ' * (70 - message.length) + time
+    puts heading_with_columns(nil, '='.color(:cyan), nil)
+    puts heading_with_columns(message.color(:cyan), ' ', time)
   end
 
   def self.finished
-    puts "\nFinished#{' ' * 61} #{time}".color(:magenta)
-    puts '='.color(:magenta) * 100
+    puts heading_with_columns("\nFinished".color(:magenta), ' ', time)
+    puts heading_with_columns(nil, '='.color(:magenta), nil)
+  end
+
+  def self.heading_with_columns(first_str, spacer_str, last_str, length = 100)
+    first_str = first_str ? "#{first_str} " : ''
+    last_str = last_str ? " #{last_str}" : ''
+    min_length = str_length("#{first_str}#{last_str}")
+    fail if min_length > length # TODO: Find a better way to handle long input strings
+    reps = (length - min_length) / str_length(spacer_str)
+    "#{first_str}#{spacer_str * reps}#{last_str}"
+  end
+
+  def self.str_length(str)
+    str = str.gsub(/\e\[\d+m/, '') # remove colors
+    str.chars.each_with_object('') do |char, new_str|
+      new_str << char unless char.ascii_only? && (char.ord < 32 || char.ord == 127)
+    end.length
   end
 end
