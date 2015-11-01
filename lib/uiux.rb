@@ -1,4 +1,4 @@
-require "uiux/version"
+require 'uiux/version'
 
 module Uiux
   # Your code goes here...
