@@ -1,5 +1,6 @@
 require 'uiux/version'
 require 'rainbow/ext/string'
+require 'awesome_print'
 
 # Renamed UIUX module to just UI for simplicity of calling it
 module UI
