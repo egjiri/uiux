@@ -51,7 +51,10 @@ module UI
     first_str = first_str ? "#{first_str} " : ''
     last_str = last_str ? " #{last_str}" : ''
     min_length = str_length("#{first_str}#{last_str}")
-    fail if min_length > length # TODO: Find a better way to handle long input strings
+    if min_length > length # Truncates long headings
+      first_str = first_str[0..-(min_length - length + 8)] + '...'
+      min_length = str_length("#{first_str}#{last_str}")
+    end
     reps = (length - min_length) / str_length(spacer_str)
     "#{first_str}#{spacer_str * reps}#{last_str}"
   end
