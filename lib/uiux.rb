@@ -28,6 +28,11 @@ module UI
 
   def self.execute(command)
     puts "#{'==>'.color(:blue)} #{command.bright}"
+    system command
+  end
+
+  def self.execute_and_register(command)
+    puts "#{'==>'.color(:blue)} #{command.bright}"
     puts result = `#{command}`
     result
   end
